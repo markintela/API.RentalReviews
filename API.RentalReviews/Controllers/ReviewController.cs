@@ -1,74 +1,54 @@
-﻿using API.RenalReviews.Models;
-using API.RenalReviews.Services;
-using Microsoft.AspNetCore.Http;
+﻿using API.RentalReviews.Services;
+using API.RentalReviews.Views.Review;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.RentalReviews.Controllers
 {
+
     [Route("api/[controller]")]
     [ApiController]
     public class ReviewController : ControllerBase
     {
-        private readonly UserService _usersService;
-        public ReviewController(UserService usersService) =>
-            _usersService = usersService;
+        private readonly ReviewService _reviewService;
+        private readonly RentService _rentsService;
+        private readonly IMapper _mapper;
 
-        [HttpGet]
-        public async Task<List<User>> Get() =>
-            await _usersService.GetAllAsync();
-
-        [HttpGet("{id:length(24)}")]
-        public async Task<ActionResult<User>> GetById(string id)
+        public ReviewController(ReviewService reviewService, RentService rentsService, IMapper mapper)
         {
-            var user = await _usersService.GetByIdAsync(id);
+            _reviewService = reviewService;
+            _rentsService = rentsService;
+            _mapper = mapper;
+        }
 
-            if (user is null)
+        [HttpPost("CreateReview", Name = "CreateReview")]
+        public async Task<IActionResult> CreateReview(string id, List<ReviewPostView> reviewPostView)
+        {
+            var rent = await _rentsService.GetByIdAsync(id);
+
+            if (rent is null)
             {
                 return NotFound();
             }
 
-            return user;
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Post(User newUser)
-        {
-            await _usersService.CreateAsync(newUser);
-
-            return CreatedAtAction(nameof(Get), new { id = newUser.Id }, newUser);
-        }
-
-        [HttpPut("{id:length(24)}")]
-        public async Task<IActionResult> Update(string id, User updatedUser)
-        {
-            var user = await _usersService.GetByIdAsync(id);
-
-            if (user is null)
-            {
-                return NotFound();
-            }
-
-            updatedUser.Id = user.Id;
-
-            await _usersService.UpdateAsync(id, updatedUser);
+            await _reviewService.CreateReviewsAsync(id, reviewPostView);
 
             return NoContent();
         }
 
-        [HttpDelete("{id:length(24)}")]
-        public async Task<IActionResult> Delete(string id)
+        [HttpPut("UpdateReview", Name = "UpdateReview")]
+        public async Task<IActionResult> UpdateReview(string id, ReviewPutView reviewPutView)
         {
-            var user = await _usersService.GetByIdAsync(id);
+            var rent = await _rentsService.GetByIdAsync(id);
 
-            if (user is null)
+            if (rent is null)
             {
                 return NotFound();
             }
 
-            await _usersService.DeleteAsync(id);
+            await _reviewService.UpdateReviewsAsync(id,reviewPutView);
 
             return NoContent();
         }
-
     }
 }

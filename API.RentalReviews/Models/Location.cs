@@ -5,9 +5,6 @@ namespace API.RentalReviews.Models
 {
     public class Location
     {
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string? Id { get; set; }
 
         [BsonElement("latitude")]
         public double Lat { get; set; }
@@ -24,10 +21,6 @@ namespace API.RentalReviews.Models
         [BsonElement("code_post")]
         public string Codepost { get; set; }
 
-
-        public Location()
-        {
-            Id = ObjectId.GenerateNewId().ToString();
-        }
+    
     }
 }

@@ -11,9 +11,18 @@ namespace API.RentalReviews.Mappers
         {
 
             CreateMap<UserPostView, User>()
+           .ForMember(dest => dest.Nome, opt => opt.MapFrom(src => src.Name))
+           .ForMember(dest => dest.From, opt => opt.MapFrom(src => src.From));
+
+
+            CreateMap<UserPutView, User>()
            .ForMember(dest => dest.Nome, opt => opt.MapFrom(src => src.Nome))
            .ForMember(dest => dest.From, opt => opt.MapFrom(src => src.From));
 
         }
+
+       
+
+        
     }
 }

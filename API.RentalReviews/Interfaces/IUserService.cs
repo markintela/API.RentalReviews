@@ -1,5 +1,6 @@
 ﻿using API.RenalReviews.Models;
 using API.RenalReviews.Services;
+using API.RentalReviews.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.RentalReviews.Interfaces
@@ -10,6 +11,7 @@ namespace API.RentalReviews.Interfaces
         Task<List<User>> GetAllAsync();  
         Task<User> GetByIdAsync(string id);
         Task UpdateAsync(string id, User updatedUser);
+
         Task DeleteAsync(string id);
     }
 }

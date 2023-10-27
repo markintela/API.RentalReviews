@@ -9,5 +9,6 @@ namespace API.RentalReviews.Interfaces
         Task<Rent> GetByIdAsync(string id);
         Task UpdateAsync(string id, Rent updatedRent);
         Task DeleteAsync(string id);
+
     }
 }

@@ -1,6 +1,7 @@
 ﻿using API.RenalReviews.Models;
 using API.RentalReviews.DatabaseSettings;
 using API.RentalReviews.Interfaces;
+using API.RentalReviews.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
@@ -45,17 +46,17 @@ namespace API.RenalReviews.Services
 
         public async Task<User> GetByIdAsync(string id)
         {
-            return await _usersCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
+            return await _usersCollection.Find(x => x._id == id).FirstOrDefaultAsync();
         }
 
         public async Task UpdateAsync(string id, User updatedUser)
         {
  
-             await _usersCollection.ReplaceOneAsync(x => x.Id == id, updatedUser);
+             await _usersCollection.ReplaceOneAsync(x => x._id == id, updatedUser);
         }
 
         public async Task DeleteAsync(string id) =>
-           await _usersCollection.DeleteOneAsync(x => x.Id == id);
+           await _usersCollection.DeleteOneAsync(x => x._id == id);
 
 
     }

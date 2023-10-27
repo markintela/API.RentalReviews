@@ -24,7 +24,7 @@ namespace API.RentalReviews.Controllers
         public async Task<List<User>> Get() =>
             await _usersService.GetAllAsync();
 
-        [HttpGet("{id:length(24)}")]
+        [HttpGet("{id:length(36)}")]
         public async Task<ActionResult<User>> GetById(string id)
         {
             var user = await _usersService.GetByIdAsync(id);
@@ -45,11 +45,11 @@ namespace API.RentalReviews.Controllers
 
             await _usersService.CreateAsync(user);
 
-            return CreatedAtAction(nameof(Get), new { id = user.Id }, user);
+            return CreatedAtAction(nameof(Get), new { id = user._id }, user);
         }
 
-        [HttpPut("{id:length(24)}")]
-        public async Task<IActionResult> Update(string id, User updatedUser)
+        [HttpPut("{id:length(36)}")]
+        public async Task<IActionResult> Update(string id, UserPutView userPutView)
         {
             var user = await _usersService.GetByIdAsync(id);
 
@@ -58,14 +58,16 @@ namespace API.RentalReviews.Controllers
                 return NotFound();
             }
 
-            updatedUser.Id = user.Id;
+            var userToUpdate = _mapper.Map<User>(userPutView);
 
-            await _usersService.UpdateAsync(id, updatedUser);
+            userToUpdate._id = user._id;
+
+            await _usersService.UpdateAsync(id, userToUpdate);
 
             return NoContent();
         }
 
-        [HttpDelete("{id:length(24)}")]
+        [HttpDelete("{id:length(36)}")]
         public async Task<IActionResult> Delete(string id)
         {
             var user = await _usersService.GetByIdAsync(id);

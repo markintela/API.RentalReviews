@@ -22,6 +22,7 @@ builder.Configuration.GetSection("RentStoreDatabase"));
 
 builder.Services.AddSingleton<UserService>();
 builder.Services.AddSingleton<RentService>();
+builder.Services.AddSingleton<ReviewService>();
 
 builder.Services.AddAutoMapper(typeof(UserProfile));
 

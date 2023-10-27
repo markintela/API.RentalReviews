@@ -1,26 +1,21 @@
 ﻿using API.RentalReviews.Models;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
-namespace API.RenalReviews.Models
+namespace API.RentalReviews.Views.Rent
 {
-    public class Rent
+    public class RentPostView
     {
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string _id { get; set; }
+
 
         [BsonElement("id_user")]
+        [Required(ErrorMessage = "From is required")]
         public string Id_User { get; set; }
-       
-        [BsonElement("type_resource")]
-        public string TypeResource { get; set; }
 
+        [BsonElement("type_ resource")]
+        public string TypeResource { get; set; }
+       
         [BsonElement("type_immobile")]
         public string TypeImmobile { get; set; }
 
@@ -31,17 +26,17 @@ namespace API.RenalReviews.Models
         public DateTime DateEnd { get; set; }
 
         [BsonElement("price")]
+        [Required(ErrorMessage = "Price is required")]
         public decimal Price { get; set; }
-        
+
+        [Required(ErrorMessage = "Location is required")]
         [BsonElement("location")]
         public Location? Location { get; set; }
 
-        [BsonElement("reviews")]
-        public List<Review> Reviews { get; set; } = new List<Review>();
+        //[BsonElement("reviews")]
+        //public List<Review>? Reviews { get; set; }
 
         [BsonElement("comment")]
         public string Comment { get; set; }
-
-
     }
 }

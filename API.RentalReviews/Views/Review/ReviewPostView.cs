@@ -1,13 +1,9 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson;
 
-namespace API.RentalReviews.Models
+namespace API.RentalReviews.Views.Review
 {
-    public class Review
+    public class ReviewPostView
     {
-
-        [BsonId]
-        public string _id { get; set; }
 
         [BsonElement("type_review")]
         public string TypeReview { get; set; }
@@ -21,8 +17,6 @@ namespace API.RentalReviews.Models
         [BsonElement("date_review")]
         public DateTime DateReview { get; set; }
 
-        [BsonElement("signatures")]
-        public List<Signature> Signature { get; set; } = new List<Signature>();
-
+   
     }
 }

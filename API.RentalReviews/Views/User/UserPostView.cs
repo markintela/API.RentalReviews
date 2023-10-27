@@ -1,4 +1,5 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
+using System.ComponentModel.DataAnnotations;
 
 namespace API.RentalReviews.Views.User
 {
@@ -6,9 +7,11 @@ namespace API.RentalReviews.Views.User
     {
 
         [BsonElement("Name")]
-        public string Nome { get; set; }
+        public string Name { get; set; }
 
         [BsonElement("From")]
-        public string? From { get; set; }
+
+        [Required(ErrorMessage = "From is required")]
+        public string From { get; set; }
     }
 }
