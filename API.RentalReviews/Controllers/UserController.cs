@@ -1,8 +1,8 @@
-﻿using API.RenalReviews.Models;
-using API.RenalReviews.Services;
-using API.RentalReviews.Views.User;
-using AutoMapper;
+﻿using AutoMapper;
+using EntityData.Models;
 using Microsoft.AspNetCore.Mvc;
+using ServicesDomain.Services;
+using ServicesDomain.Views.User;
 
 namespace API.RentalReviews.Controllers
 {

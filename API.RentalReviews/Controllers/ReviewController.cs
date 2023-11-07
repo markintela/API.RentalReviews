@@ -1,7 +1,8 @@
-﻿using API.RentalReviews.Services;
-using API.RentalReviews.Views.Review;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using ServicesDomain.Interfaces;
+using ServicesDomain.Services;
+using ServicesDomain.Views.Review;
 
 namespace API.RentalReviews.Controllers
 {
@@ -10,11 +11,11 @@ namespace API.RentalReviews.Controllers
     [ApiController]
     public class ReviewController : ControllerBase
     {
-        private readonly ReviewService _reviewService;
-        private readonly RentService _rentsService;
+        private readonly IReviewService _reviewService;
+        private readonly IRentService _rentsService;
         private readonly IMapper _mapper;
 
-        public ReviewController(ReviewService reviewService, RentService rentsService, IMapper mapper)
+        public ReviewController(IReviewService reviewService, IRentService rentsService, IMapper mapper)
         {
             _reviewService = reviewService;
             _rentsService = rentsService;

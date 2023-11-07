@@ -1,8 +1,7 @@
-using API.RenalReviews.Services;
-using API.RentalReviews.DatabaseSettings;
-using API.RentalReviews.Mappers;
-using API.RentalReviews.Services;
+using EntityData.DatabaseSettings;
 using MongoDB.Driver;
+using ServicesDomain.Mappers;
+using ServicesDomain.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

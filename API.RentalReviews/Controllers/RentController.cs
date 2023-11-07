@@ -1,13 +1,10 @@
-﻿using API.RenalReviews.Models;
-using API.RenalReviews.Services;
-using API.RentalReviews.Interfaces;
-using API.RentalReviews.Models;
-using API.RentalReviews.Services;
-using API.RentalReviews.Views.Rent;
-using API.RentalReviews.Views.User;
-using AutoMapper;
+﻿using AutoMapper;
+using EntityData.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ServicesDomain;
+using ServicesDomain.Services;
+using ServicesDomain.Views.Rent;
 
 namespace API.RentalReviews.Controllers
 {
@@ -33,9 +30,10 @@ namespace API.RentalReviews.Controllers
         [HttpGet("{id:length(36)}")]
         public async Task<ActionResult<Rent>> GetById(string id)
         {
+            var teste = new ServiceClass();
+        
 
-
-            var user = new User() { Nome = "marcus" };
+        var user = new User() { Nome = "marcus" };
 
 
             var rent = await _rentsService.GetByIdAsync(id);
