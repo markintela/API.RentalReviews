@@ -10,7 +10,7 @@ namespace ServicesDomain.Mappers
         public UserProfile()
         {
 
-            CreateMap<UserPostView, User>()
+            CreateMap<UserCreationView, User>()
            .ForMember(dest => dest.Nome, opt => opt.MapFrom(src => src.Name))
            .ForMember(dest => dest.From, opt => opt.MapFrom(src => src.From));
 

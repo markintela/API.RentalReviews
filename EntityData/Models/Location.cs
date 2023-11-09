@@ -1,26 +1,18 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson;
+﻿using EntityData.Common;
 
 namespace EntityData.Models
 {
-    public class Location
+    public class Location : EntityBase<Guid>
     {
-
-        [BsonElement("latitude")]
         public double Lat { get; set; }
 
-        [BsonElement("longitude")]
         public double Long { get; set; }
 
-        [BsonElement("address")]
         public string Address { get; set; }
 
-        [BsonElement("level")]
-        public string Level { get; set; }
+        public int Level { get; set; }
 
-        [BsonElement("code_post")]
         public string Codepost { get; set; }
-
 
     }
 }

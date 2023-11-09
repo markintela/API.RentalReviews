@@ -32,7 +32,7 @@ namespace API.RentalReviews.Controllers
                 return NotFound();
             }
 
-            await _reviewService.CreateReviewsAsync(id, reviewPostView);
+            //await _reviewService.CreateReviewsAsync(id, reviewPostView);
 
             return NoContent();
         }
@@ -47,7 +47,7 @@ namespace API.RentalReviews.Controllers
                 return NotFound();
             }
 
-            await _reviewService.UpdateReviewsAsync(id,reviewPutView);
+            //await _reviewService.UpdateReviewsAsync(id,reviewPutView);
 
             return NoContent();
         }

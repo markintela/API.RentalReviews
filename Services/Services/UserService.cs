@@ -1,8 +1,10 @@
-﻿using EntityData.DatabaseSettings;
+﻿using AutoMapper;
+using EntityData.DatabaseSettings;
+using EntityData.Interfaces;
 using EntityData.Models;
 using Microsoft.Extensions.Options;
-using MongoDB.Driver;
 using ServicesDomain.Interfaces;
+using ServicesDomain.Views.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,49 +15,40 @@ namespace ServicesDomain.Services
 {
     public class UserService : IUserService
     {
-        private readonly IMongoCollection<User> _usersCollection;
+        private readonly IUserRepository _userRepository;
+        public readonly IMapper _mapper;
 
-        public UserService(
-            IOptions<UserStoreDatabaseSettings> userStoreDatabaseSettings)
+        public UserService(IUserRepository userRepository, IMapper mapper)
         {
-            var mongoClient = new MongoClient(
-                userStoreDatabaseSettings.Value.ConnectionString);
+            _userRepository = userRepository;
+            _mapper = mapper;
+        }
+    
 
-            var mongoDatabase = mongoClient.GetDatabase(
-                userStoreDatabaseSettings.Value.DatabaseName);
-
-            _usersCollection = mongoDatabase.GetCollection<User>(
-                userStoreDatabaseSettings.Value.UsersCollectionName);
+        public async Task<User> CreateAsync(UserCreationView userCreationView)
+        {
+            var user = _mapper.Map<User>(userCreationView);
+            return await _userRepository.CreateAsync(user);
         }
 
-
-
-
-
-        public async Task CreateAsync(User newUser)
+        public async Task DeleteAsync(Guid id)
         {
-            await _usersCollection.InsertOneAsync(newUser);
+            await _userRepository.DeleteAsync(id);
         }
 
         public async Task<List<User>> GetAllAsync()
         {
-            return await _usersCollection.Find(_ => true).ToListAsync();
+            return await _userRepository.GetAllAsync();
         }
 
-        public async Task<User> GetByIdAsync(string id)
+        public async Task<User> GetAsync(Guid id)
         {
-            return await _usersCollection.Find(x => x._id == id).FirstOrDefaultAsync();
+            return await _userRepository.GetAsync(id);
         }
 
-        public async Task UpdateAsync(string id, User updatedUser)
+        public async Task<User> UpdateAsync(User user)
         {
-
-            await _usersCollection.ReplaceOneAsync(x => x._id == id, updatedUser);
+            return await _userRepository.UpdateAsync(user);
         }
-
-        public async Task DeleteAsync(string id) =>
-           await _usersCollection.DeleteOneAsync(x => x._id == id);
-
-
     }
 }

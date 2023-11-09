@@ -1,28 +1,20 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using EntityData.Common;
 
 namespace EntityData.Models
 {
-    public class Review
+    public class Review : EntityBase<Guid>
     {
-
-        [BsonId]
-        public string _id { get; set; }
-
-        [BsonElement("type_review")]
+        [ForeignKey("IdSignature")]
+        public Guid IdSignature { get; set; }
         public string TypeReview { get; set; }
-
-        [BsonElement("description")]
         public string Description { get; set; }
-
-        [BsonElement("score")]
         public int Score { get; set; }
+        public DateTime DateCreation { get; set; }
+        public DateTime LastUpdate { get; set; }
 
-        [BsonElement("date_review")]
-        public DateTime DateReview { get; set; }
-
-        [BsonElement("signatures")]
-        public List<Signature> Signature { get; set; } = new List<Signature>();
-
+        //FK´s to access related tables
+        [ForeignKey("IdSignature")]
+        public virtual Signature Signature { get; set; }
     }
 }

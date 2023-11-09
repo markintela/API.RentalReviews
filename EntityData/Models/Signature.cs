@@ -1,15 +1,12 @@
-﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
+﻿using EntityData.Common;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EntityData.Models
 {
-    public class Signature
+    public class Signature : EntityBase<Guid>
     {
-
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string _id { get; set; }
-        public int SignedById { get; set; }
+        [ForeignKey("SignedById")]
+        public Guid SignedById { get; set; }
         public string SignedByName { get; set; }
         public DateTime DateSignature { get; set; }
         public string Comment { get; set; }

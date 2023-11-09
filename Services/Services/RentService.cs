@@ -1,7 +1,6 @@
 ﻿using EntityData.DatabaseSettings;
 using EntityData.Models;
 using Microsoft.Extensions.Options;
-using MongoDB.Driver;
 using ServicesDomain.Interfaces;
 
 namespace ServicesDomain.Services
@@ -9,56 +8,38 @@ namespace ServicesDomain.Services
     public class RentService : IRentService
     {
 
-        private readonly IMongoCollection<Rent> _rentsCollection;
-
-        public RentService(
-            IOptions<RentStoreDatabaseSettings> rentStoreDatabaseSettings)
+ 
+        public RentService()
         {
-            var mongoClient = new MongoClient(
-                rentStoreDatabaseSettings.Value.ConnectionString);
-
-            var mongoDatabase = mongoClient.GetDatabase(
-                rentStoreDatabaseSettings.Value.DatabaseName);
-
-            _rentsCollection = mongoDatabase.GetCollection<Rent>(
-                rentStoreDatabaseSettings.Value.RentsCollectionName);
+           
         }
-
 
         public async Task CreateAsync(Rent newRent)
         {
-            await _rentsCollection.InsertOneAsync(newRent);
+            throw new NotImplementedException();
         }
 
         public async Task<List<Rent>> GetAllAsync()
         {
-            return await _rentsCollection.Find(_ => true).ToListAsync();
+            throw new NotImplementedException();
         }
 
         public async Task<Rent> GetByIdAsync(string id)
         {
-            return await _rentsCollection.Find(x => x._id == id).FirstOrDefaultAsync();
+            throw new NotImplementedException();
         }
 
         public async Task UpdateAsync(string id, Rent updatedRent)
         {
-            Builders<Rent>.Filter.Eq(x => x._id, updatedRent._id);
-            Builders<Rent>.Update.Set(x => x.Reviews, updatedRent.Reviews);
-            Builders<Rent>.Update.Set(x => x.Location, updatedRent.Location);
-            await _rentsCollection.ReplaceOneAsync(x => x._id == id, updatedRent);
+            throw new NotImplementedException();
         }
 
         public async Task DeleteAsync(string id) =>
-           await _rentsCollection.DeleteOneAsync(x => x._id == id);
+           throw new NotImplementedException();
 
         public async Task UpdateReviewsAsync(string id, Review reviewUpdate)
         {
-            var rent = await _rentsCollection.Find(x => x._id == id).FirstOrDefaultAsync();
-
-            var filter = Builders<Rent>.Filter.Eq(x => x._id, id);
-            var review = Builders<Rent>.Update.Push(x => x.Reviews, reviewUpdate);
-
-            await _rentsCollection.UpdateOneAsync(filter, review);
+            throw new NotImplementedException();
 
         }
     }

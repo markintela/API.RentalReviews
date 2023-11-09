@@ -1,16 +1,15 @@
 ﻿using EntityData.Models;
-using ServicesDomain.Views.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ServicesDomain.Interfaces
+namespace EntityData.Interfaces
 {
-    public interface IUserService
+    public interface IUserRepository
     {
-        Task<User> CreateAsync(UserCreationView userCreationView);
+        Task<User> CreateAsync(User user);
         Task<List<User>> GetAllAsync();
         Task<User> GetAsync(Guid id);
         Task<User> UpdateAsync(User user);

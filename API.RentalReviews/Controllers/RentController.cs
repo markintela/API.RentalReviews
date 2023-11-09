@@ -30,11 +30,6 @@ namespace API.RentalReviews.Controllers
         [HttpGet("{id:length(36)}")]
         public async Task<ActionResult<Rent>> GetById(string id)
         {
-            var teste = new ServiceClass();
-        
-
-        var user = new User() { Nome = "marcus" };
-
 
             var rent = await _rentsService.GetByIdAsync(id);
 
@@ -49,33 +44,14 @@ namespace API.RentalReviews.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(RentPostView rentPostView)
         {
-
-
-            var rent = _mapper.Map<Rent>(rentPostView);
-
-            await _rentsService.CreateAsync(rent);
-
-            return CreatedAtAction(nameof(Get), new { id = rent._id }, rent);
+            throw new NotImplementedException();
         }
 
         [HttpPut("Update", Name = "Update")]
         public async Task<IActionResult> Update(string id, Rent rent)
         {
             var rentToCreate = await _rentsService.GetByIdAsync(id);
-            var updatedRent = rent;
-
-
-
-            if (rentToCreate is null)
-            {
-                return NotFound();
-            }
-
-            updatedRent._id = rentToCreate._id;
-
-            await _rentsService.UpdateAsync(id, updatedRent);
-
-            return NoContent();
+            throw new NotImplementedException();
         }
 
         [HttpDelete("{id:length(36)}")]

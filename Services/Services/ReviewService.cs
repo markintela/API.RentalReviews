@@ -2,7 +2,6 @@
 using EntityData.DatabaseSettings;
 using EntityData.Models;
 using Microsoft.Extensions.Options;
-using MongoDB.Driver;
 using ServicesDomain.Interfaces;
 using ServicesDomain.Views.Review;
 
@@ -10,44 +9,36 @@ namespace ServicesDomain.Services
 {
     public class ReviewService : IReviewService
     {
-        private readonly IMongoCollection<Rent> _rentsCollection;
         private readonly IMapper _mapper;
 
-        public ReviewService(
-            IOptions<RentStoreDatabaseSettings> rentStoreDatabaseSettings, IMapper mapper)
+        public ReviewService()
         {
-            var mongoClient = new MongoClient(
-                rentStoreDatabaseSettings.Value.ConnectionString);
-
-            var mongoDatabase = mongoClient.GetDatabase(
-                rentStoreDatabaseSettings.Value.DatabaseName);
-
-            _rentsCollection = mongoDatabase.GetCollection<Rent>(
-                rentStoreDatabaseSettings.Value.RentsCollectionName);
-            _mapper = mapper;
+       
         }
 
-        public async Task CreateReviewsAsync(string id, List<ReviewPostView> reviewPostViewList)
+        public Task<Review> CreateAsync(Review review)
         {
-            var reviewsListToCreate = _mapper.Map<List<Review>>(reviewPostViewList);
-            var filter = Builders<Rent>.Filter.Eq(x => x._id, id);
-            var update = Builders<Rent>.Update.PushEach(x => x.Reviews, reviewsListToCreate);
-            await _rentsCollection.UpdateManyAsync(filter, update);
+            throw new NotImplementedException();
         }
 
-        public async Task UpdateReviewsAsync(string id, ReviewPutView reviewPutView)
+        public Task DeleteAsync(int id)
         {
-            var reviewsListToUpdate = _mapper.Map<Review>(reviewPutView);
+            throw new NotImplementedException();
+        }
 
-            var rent = new Rent();
-            rent.Reviews.Add(reviewsListToUpdate);
+        public Task<List<Review>> GetAllAsync()
+        {
+            throw new NotImplementedException();
+        }
 
-            var builder = Builders<Rent>.Filter;
-            var filter = builder.Eq(x => x._id, id);
-            var update = Builders<Rent>.Update.AddToSet<Review>
-            ("reviews", reviewsListToUpdate);
+        public Task<Review> GetAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
 
-            await _rentsCollection.UpdateOneAsync(filter, update);
+        public Task<Review> UpdateAsync(Review review)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -5,9 +5,9 @@ VisualStudioVersion = 17.7.34024.191
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API.RentalReviews", "API.RentalReviews\API.RentalReviews.csproj", "{89BDF380-3870-419F-8D08-39A45958E559}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityData", "EntityData\EntityData.csproj", "{38C31230-847B-48AA-91D8-568BD67DC25C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityData", "EntityData\EntityData.csproj", "{38C31230-847B-48AA-91D8-568BD67DC25C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServicesDomain", "Services\ServicesDomain.csproj", "{D5383590-59BB-468E-99A0-B3B8564F8718}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServicesDomain", "Services\ServicesDomain.csproj", "{D5383590-59BB-468E-99A0-B3B8564F8718}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

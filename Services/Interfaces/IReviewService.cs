@@ -1,11 +1,14 @@
-﻿using ServicesDomain.Views.Review;
+﻿using EntityData.Models;
+using ServicesDomain.Views.Review;
 
 namespace ServicesDomain.Interfaces
 {
     public interface IReviewService
     {
-        Task CreateReviewsAsync(string id, List<ReviewPostView> reviewListCreate);
-
-        Task UpdateReviewsAsync(string id, ReviewPutView reviewUpdate);
+        Task<Review> CreateAsync(Review review);
+        Task<List<Review>> GetAllAsync();
+        Task<Review> GetAsync(int id);
+        Task<Review> UpdateAsync(Review review);
+        Task DeleteAsync(int id);
     }
 }

@@ -1,23 +1,11 @@
-﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
+﻿using EntityData.Common;
 using System.ComponentModel.DataAnnotations;
 
 namespace EntityData.Models
 {
-    public class User
+    public class User : EntityBase<Guid>
     {
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string _id { get; set; }
-
-        [BsonElement("Name")]
         public string Nome { get; set; }
-
-        [BsonElement("From")]
         public string From { get; set; }
-
-
-
-
     }
 }

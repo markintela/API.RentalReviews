@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using EntityData.Models;
-using MongoDB.Bson;
+
 using ServicesDomain.Views.Review;
 
 namespace ServicesDomain.Mappers
@@ -10,15 +10,9 @@ namespace ServicesDomain.Mappers
         public ReviewProfile()
         {
 
-            CreateMap<ReviewPostView, Review>()
-            .ForMember(dest => dest._id, opt => opt.MapFrom(src => ObjectId.GenerateNewId().ToString()))
-            .ForMember(dest => dest.TypeReview, opt => opt.MapFrom(src => src.TypeReview))
-            .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
-            .ForMember(dest => dest.Score, opt => opt.MapFrom(src => src.Score))
-            .ForMember(dest => dest.DateReview, opt => opt.MapFrom(src => src.DateReview));
-
+            CreateMap<ReviewPostView, Review>();
             CreateMap<ReviewPutView, Review>()
-            .ForMember(dest => dest._id, opt => opt.MapFrom(src => src._id))
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src._id))
             .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
             .ForMember(dest => dest.Score, opt => opt.MapFrom(src => src.Score));
 

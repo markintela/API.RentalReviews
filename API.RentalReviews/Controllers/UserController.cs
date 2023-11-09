@@ -1,8 +1,12 @@
 ﻿using AutoMapper;
 using EntityData.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
+using ServicesDomain.Interfaces;
 using ServicesDomain.Services;
 using ServicesDomain.Views.User;
+using Swashbuckle.AspNetCore.Annotations;
+using System.Net;
 
 namespace API.RentalReviews.Controllers
 {
@@ -11,74 +15,72 @@ namespace API.RentalReviews.Controllers
     [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
-        private readonly UserService _usersService;
+        private readonly IUserService _usersService;
         private readonly IMapper _mapper;
 
-        public UserController(UserService usersService, IMapper mapper) {
+        public UserController(IUserService usersService, IMapper mapper) {
            
             _usersService = usersService;
             _mapper = mapper;
         }
-            
-        [HttpGet]
+
+        /// <summary>
+        /// Create a new user.
+        /// </summary>
+        [HttpPost]
+        public async Task<IActionResult> Post(UserCreationView userCreationView)
+        {
+            var userCreated = await _usersService.CreateAsync(userCreationView);
+
+            if (userCreated == null)
+                throw new ApplicationException("User not created.");
+
+            return CreatedAtAction(nameof(Get), new { id = userCreated.Id }, userCreated);
+        }
+
+        /// <summary>
+        /// Get all users.
+        /// </summary>
+        [HttpGet]  
         public async Task<List<User>> Get() =>
             await _usersService.GetAllAsync();
 
+        /// <summary>
+        /// Get user by id.
+        /// </summary>
         [HttpGet("{id:length(36)}")]
-        public async Task<ActionResult<User>> GetById(string id)
+        public async Task<ActionResult<User>> GetById(Guid id)
         {
-            var user = await _usersService.GetByIdAsync(id);
-
-            if (user is null)
+            var post = await _usersService.GetAsync(id);
+            if (post == null)
             {
-                return NotFound();
+                throw new KeyNotFoundException("User not found.");
             }
-
-            return user;
+            return Ok(post);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Post(UserPostView userPostView)
+        /// <summary>
+        /// Update user.
+        /// </summary>
+        [HttpPut()]
+        public async Task<IActionResult> Update(User user)
         {
+            var userToUpdated = await _usersService.UpdateAsync(user);
 
-            var user = _mapper.Map<User>(userPostView);
-
-            await _usersService.CreateAsync(user);
-
-            return CreatedAtAction(nameof(Get), new { id = user._id }, user);
-        }
-
-        [HttpPut("{id:length(36)}")]
-        public async Task<IActionResult> Update(string id, UserPutView userPutView)
-        {
-            var user = await _usersService.GetByIdAsync(id);
-
-            if (user is null)
+            if (userToUpdated == null)
             {
-                return NotFound();
+                throw new NotImplementedException("User not updated.");
             }
-
-            var userToUpdate = _mapper.Map<User>(userPutView);
-
-            userToUpdate._id = user._id;
-
-            await _usersService.UpdateAsync(id, userToUpdate);
-
-            return NoContent();
+            return Ok(userToUpdated);
         }
 
+        /// <summary>
+        /// Remove user.
+        /// </summary>
         [HttpDelete("{id:length(36)}")]
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            var user = await _usersService.GetByIdAsync(id);
-
-            if (user is null)
-            {
-                return NotFound();
-            }
-
             await _usersService.DeleteAsync(id);
-
             return NoContent();
         }
     }
