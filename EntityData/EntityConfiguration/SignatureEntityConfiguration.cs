@@ -18,8 +18,10 @@ namespace EntityData.EntityConfiguration
             builder.Property(x => x.Id).IsRequired();
             builder.Property(x => x.SignedById).IsRequired();
             builder.Property(x => x.SignedByName).IsRequired();
-            builder.Property(x => x.DateSignature).IsRequired();
+            builder.Property(x => x.DateCreation).IsRequired();
+            builder.Property(x => x.LastUpdate).IsRequired(false);
             builder.Property(x => x.Comment);
+
         }
     }
 }

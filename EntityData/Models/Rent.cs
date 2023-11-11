@@ -11,7 +11,7 @@ namespace EntityData.Models
     public class Rent : EntityBase<Guid>
     {
         [ForeignKey("IdUser")]
-        public Guid? IdUser { get; set; }
+        public Guid IdUser { get; set; }
 
         [ForeignKey("IdLocation")]
         public Guid IdLocation { get; set; }
@@ -21,11 +21,22 @@ namespace EntityData.Models
         public DateTime DateBegin { get; set; }
         public DateTime DateEnd { get; set; }
         public DateTime DateCreation { get; set; }
+        public DateTime? LastUpdate { get; set; }
         public string Comment { get; set; }
+        public bool IsActive { get; set; }
 
         //FK´s to access related tables
         [ForeignKey("IdLocation")]
         public virtual Location Location { get; set; }
+
+        [ForeignKey("IdUser")]
+        public virtual User User { get; set; }
+
+        public Rent()
+        {
+            IsActive = true;
+            DateCreation = DateTime.Now;
+        }
 
     }
 }

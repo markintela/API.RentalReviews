@@ -4,6 +4,7 @@ using EntityData.Repository.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EntityData.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20231110232511_UpdModels")]
+    partial class UpdModels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,16 +35,15 @@ namespace EntityData.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("AddressDetails")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Codepost")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Lat")
                         .HasColumnType("float");
+
+                    b.Property<int>("Level")
+                        .HasColumnType("int");
 
                     b.Property<double>("Long")
                         .HasColumnType("float");
@@ -54,6 +56,7 @@ namespace EntityData.Migrations
             modelBuilder.Entity("EntityData.Models.Rent", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Comment")
@@ -75,10 +78,7 @@ namespace EntityData.Migrations
                     b.Property<Guid>("IdUser")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("LastUpdate")
+                    b.Property<DateTime>("LastUpdate")
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("Price")
@@ -94,7 +94,7 @@ namespace EntityData.Migrations
 
                     b.HasIndex("IdLocation");
 
-                    b.ToTable("Rents", (string)null);
+                    b.ToTable("Rent", (string)null);
                 });
 
             modelBuilder.Entity("EntityData.Models.Review", b =>
@@ -113,10 +113,10 @@ namespace EntityData.Migrations
                     b.Property<Guid>("IdRent")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
+                    b.Property<Guid>("IdSignature")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("LastUpdate")
+                    b.Property<DateTime>("LastUpdate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("Score")
@@ -129,6 +129,8 @@ namespace EntityData.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("IdRent");
+
+                    b.HasIndex("IdSignature");
 
                     b.ToTable("Reviews", (string)null);
                 });
@@ -149,22 +151,17 @@ namespace EntityData.Migrations
                     b.Property<Guid>("IdReview")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("LastUpdate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("SignedById")
+                    b.Property<Guid>("IdUser")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("LastUpdate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("SignedByName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("IdReview");
 
                     b.ToTable("Signatures", (string)null);
                 });
@@ -190,12 +187,6 @@ namespace EntityData.Migrations
 
             modelBuilder.Entity("EntityData.Models.Rent", b =>
                 {
-                    b.HasOne("EntityData.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("EntityData.Models.Location", "Location")
                         .WithMany()
                         .HasForeignKey("IdLocation")
@@ -203,8 +194,6 @@ namespace EntityData.Migrations
                         .IsRequired();
 
                     b.Navigation("Location");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("EntityData.Models.Review", b =>
@@ -215,18 +204,15 @@ namespace EntityData.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Rent");
-                });
-
-            modelBuilder.Entity("EntityData.Models.Signature", b =>
-                {
-                    b.HasOne("EntityData.Models.Review", "Review")
+                    b.HasOne("EntityData.Models.Signature", "Signature")
                         .WithMany()
-                        .HasForeignKey("IdReview")
+                        .HasForeignKey("IdSignature")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Review");
+                    b.Navigation("Rent");
+
+                    b.Navigation("Signature");
                 });
 #pragma warning restore 612, 618
         }

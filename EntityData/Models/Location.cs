@@ -10,7 +10,7 @@ namespace EntityData.Models
 
         public string Address { get; set; }
 
-        public int Level { get; set; }
+        public string AddressDetails { get; set; }
 
         public string Codepost { get; set; }
 

@@ -20,11 +20,12 @@ namespace EntityData.EntityConfiguration
             builder.Property(x => x.Description);
             builder.Property(x => x.Score).IsRequired();
             builder.Property(x => x.DateCreation).IsRequired();
+            builder.Property(x => x.LastUpdate).IsRequired(false);
 
             //Mapping Fk´s
-            builder.HasOne(x => x.Signature)
+            builder.HasOne(x => x.Rent)
                 .WithMany()
-                .HasForeignKey(x => x.IdSignature);
+                .HasForeignKey(x => x.IdRent);
         }
     }
 }

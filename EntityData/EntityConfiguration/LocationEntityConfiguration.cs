@@ -17,7 +17,7 @@ namespace EntityData.EntityConfiguration
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Long).IsRequired();
             builder.Property(x => x.Address);
-            builder.Property(x => x.Level).IsRequired();
+            builder.Property(x => x.AddressDetails).IsRequired();
             builder.Property(x => x.Codepost);
         }
     }
